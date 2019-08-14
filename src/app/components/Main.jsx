@@ -6,11 +6,13 @@ import { store } from '../store';
 import { history } from '../store/history'
 
 import { ConnectedDashboard } from './Dashboard';
+import {ConnectedNavigation} from './Navigation';
 
 export const Main = () => (
     <Router history={history}>
         <Provider store={store}>
             <div>
+                <ConnectedNavigation />
                 {/* <ConnectedDashboard /> */}
                 <Route
                     exact
