@@ -5,8 +5,10 @@ import { Router, Route } from 'react-router-dom';
 import { store } from '../store';
 import { history } from '../store/history'
 
+import { ConnectedNavigation } from './Navigation';
+
 import { ConnectedDashboard } from './Dashboard';
-import {ConnectedNavigation} from './Navigation';
+import { ConnectTaskDetailed } from './TaskDetail';
 
 export const Main = () => (
     <Router history={history}>
@@ -18,6 +20,11 @@ export const Main = () => (
                     exact
                     path="/dashboard"
                     render={() => (<ConnectedDashboard />)}
+                />
+                <Route
+                    exact
+                    path="/task/:id"
+                    render={({ match }) => (<ConnectTaskDetailed match={match} />)}
                 />
             </div>
         </Provider>

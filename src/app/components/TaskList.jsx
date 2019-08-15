@@ -1,15 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import {requestTaskCreation} from '../store/mutations';
+import { requestTaskCreation } from '../store/mutations';
 
 export const TaskList = ({ name, id, tasks, createNewTask }) => (
     <React.Fragment>
         <h3>{name}</h3>
         <ul>
-            {tasks.map(task => (<li key={task.id}>{task.name}</li>))}
+            {tasks.map(task => (
+                <li key={task.id}>
+                    <Link to={`/task/${task.id}`}>
+                        {task.name}
+                    </Link>
+                </li>
+            ))}
         </ul>
-        <button onClick={()=>createNewTask(id)}>Add New</button>
+        <button onClick={() => createNewTask(id)}>Add New</button>
     </React.Fragment>
 )
 
