@@ -26,3 +26,24 @@ export function* taskCreationSaga() {
         });
     }
 }
+
+export function* taskModificationSaga() {
+    while (true) {
+        //If any of these actions are dispatched the next line of code will run
+        //These actions are already being sent to the reducer so this saga is going to inform the server of the change.
+        const task = yield take([
+            mutations.SET_TASK_NAME, 
+            mutations.SET_TASK_GROUP, 
+            mutations.SET_TASK_COMPLETE
+        ]);
+
+        axios.post(`${url}/task/update`, {
+            task: {
+                id: task.taskId,
+                group: task.groupId,
+                name: task.name,
+                isComplete: task.isComplete
+            }
+        })
+    }
+}
