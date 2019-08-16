@@ -9,6 +9,7 @@ This is a full stack JavaScript development environment.
 - React - For building the UI
 - Redux - For state management
 - React Sagas - For handling async operations and side effects
+- Axios - For making HTTP requests to the back end
 - MongoDB - Database for persisting data
 - Express - JavaScript server for serving up Web APIs called by the front end
 
