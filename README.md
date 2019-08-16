@@ -15,6 +15,12 @@ This is a full stack JavaScript development environment.
 ## Installation
 `npm install`
 
+## Running the React Client and the Express Server Simultaneously
+
+`npm run start-dev`
+
+Note: You can ONLY run this command after everything has been installed and configured!
+
 ## *** React (Front End Application) ***
 
 ### Running the Application
