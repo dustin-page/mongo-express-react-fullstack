@@ -12,7 +12,7 @@ import * as mutations from './mutations';
 
 export const store = createStore(
     combineReducers({
-        session(session = defaultState.session, action) {
+        session(session = defaultState.session || {}, action) {
             return session;
         },
         tasks(tasks = defaultState.tasks, action) {
