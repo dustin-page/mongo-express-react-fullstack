@@ -32,8 +32,8 @@ export function* taskModificationSaga() {
         //If any of these actions are dispatched the next line of code will run
         //These actions are already being sent to the reducer so this saga is going to inform the server of the change.
         const task = yield take([
-            mutations.SET_TASK_NAME, 
-            mutations.SET_TASK_GROUP, 
+            mutations.SET_TASK_NAME,
+            mutations.SET_TASK_GROUP,
             mutations.SET_TASK_COMPLETE
         ]);
 
@@ -45,5 +45,27 @@ export function* taskModificationSaga() {
                 isComplete: task.isComplete
             }
         })
+    }
+}
+
+export function* userAuthenticationSaga() {
+    while (true) {
+        const { username, password } = yield take(mutations.REQUEST_AUTHENTICATE_USER);
+        //Try to get some data back from the server
+        try {
+            const { data } = axios.post(`${url}/authenticate`, {
+                username,
+                password
+            });
+
+            //if there's no data, which happens if this POST fails
+            if (!data) {
+                throw new Error();
+            }
+        } catch (e) {
+            console.log("Can't Authenticate");
+            //If this fails let user know they haven't been able to log in correctly
+            yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
+        }
     }
 }
