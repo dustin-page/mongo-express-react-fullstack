@@ -1,16 +1,21 @@
+//Use md5 to create passwordHashes
+import md5 from 'md5';
+
 //This state defines everything our application needs to be unique from one user to another
 export const defaultState = {
-    session: {
-        authenticated: false
-    },
+    //session: {
+    //    authenticated: false
+    //},
     users: [{
         id: "U1",
         name: "Dev",
-        friends: [`U2`]
+        friends: [`U2`],
+        passwordHash:md5("TUPLES")
     }, {
         id: "U2",
         name: "C. Eeyo",
-        friends: []
+        friends: [],
+        passwordHash:md5("PROFITING")
     }],
     groups: [{
         name: "To Do",

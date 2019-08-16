@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser'; //body-parser allows us to handle POST requests
 import { connectDB } from './connect-db'; //DB connector
+import './initialize-db'; //Brings in the whole file without importing any methods or constants from it
 
 let port = 7777;
 let app = express();
