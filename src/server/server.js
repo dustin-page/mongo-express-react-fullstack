@@ -2,7 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser'; //body-parser allows us to handle POST requests
 import { connectDB } from './connect-db'; //DB connector
+
 import './initialize-db'; //Brings in the whole file without importing any methods or constants from it
+import {authenticationRoute} from './authenticate';
 
 let port = 7777;
 let app = express();
@@ -21,6 +23,8 @@ app.use(
     bodyParser.urlencoded({ extended: true }), //Enables POST requests
     bodyParser.json() //Enables POST requests
 );
+
+authenticationRoute(app);
 
 /***** MongoDB Update Methods *****/
 
