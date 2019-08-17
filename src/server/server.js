@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'; //body-parser allows us to handle POST req
 import { connectDB } from './connect-db'; //DB connector
 
 import './initialize-db'; //Brings in the whole file without importing any methods or constants from it
-import {authenticationRoute} from './authenticate';
+import { authenticationRoute } from './authenticate';
 
 let port = 7777;
 let app = express();

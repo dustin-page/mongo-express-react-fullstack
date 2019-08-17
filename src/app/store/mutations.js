@@ -14,6 +14,8 @@ export const AUTHENTICATING = "AUTHENTICATING";
 export const AUTHENTICATED = "AUTHENTICATED";
 export const NOT_AUTHENTICATED = "NOT_AUTHENTICATED";
 
+export const SET_STATE = "SET_STATE";
+
 //Action Creators
 export const requestTaskCreation = (groupId) => ({
     type: REQUEST_TASK_CREATION,
@@ -55,4 +57,9 @@ export const processAuthenticateUser = (status = AUTHENTICATING, session = null)
     type: PROCESSING_AUTHENTICATE_USER,
     session,
     authenticated: status
-})
+});
+
+export const setState = (state = {}) => ({
+    type: SET_STATE,
+    state
+});

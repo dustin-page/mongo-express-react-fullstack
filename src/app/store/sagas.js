@@ -3,6 +3,7 @@ import uuid from 'uuid';
 import axios from 'axios';
 
 import * as mutations from './mutations';
+import { history } from './history';
 
 //Define URL to use to communicate to the server
 const url = "http://localhost:7777";
@@ -53,7 +54,7 @@ export function* userAuthenticationSaga() {
         const { username, password } = yield take(mutations.REQUEST_AUTHENTICATE_USER);
         //Try to get some data back from the server
         try {
-            const { data } = axios.post(`${url}/authenticate`, {
+            const { data } = yield axios.post(`${url}/authenticate`, {
                 username,
                 password
             });
@@ -62,6 +63,15 @@ export function* userAuthenticationSaga() {
             if (!data) {
                 throw new Error();
             }
+
+            console.log("Authenticated!", data);
+
+            yield put(mutations.setState(data.state));
+            yield put(mutations.processAuthenticateUser(mutations.AUTHENTICATED));
+
+            //After successful login redirect to the dashboard page
+            history.push('/dashboard');
+
         } catch (e) {
             console.log("Can't Authenticate");
             //If this fails let user know they haven't been able to log in correctly
