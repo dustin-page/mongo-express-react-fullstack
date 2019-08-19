@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap';
+
+import './scss/app.scss';
 
 import { store } from './store';
 
