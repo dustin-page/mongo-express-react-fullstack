@@ -88,7 +88,27 @@ Important: You must open the command interpreter as an Administrator.
 
 `npm run server-test`
 
-## Future Enhancements
+## *** Deploying to Production ***
+
+### Deploy using "Heroku Git"
+
+Note: These instructions assume you have already created the new app on [Heroku](heroku.com) by following the "Create new app" steps.
+
+1. If you haven't already download and install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line)
+
+2. Open Git Bash in your apps root directory and make some changes.
+
+    `git add .`
+
+    `git commit -m "made some changes"`
+
+3. Deploy the changes to Heroku.
+
+    `git push heroku master`
+
+    Note: Deploying to heroku git doesn't update the master branch for the app's git repository. Follow the standard git commit process to update your repository code.
+
+## *** Future Enhancements ***
 
 1. Add a CSS Preprocesser for SASS or LESS
 2. Set up a Webpack build process for production
