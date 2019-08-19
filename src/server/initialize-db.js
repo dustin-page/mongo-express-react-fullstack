@@ -6,7 +6,7 @@ async function initializeDB() {
     let db = await connectDB();
     //Find the default user
     let user = await db.collection('users').findOne({id:"U1"});
-    //If there's no user then run this db initialization logic
+    //If there's no user then run this db initialization logic. This is used in both dev and production to initialize the DB
     if(!user) {
         for (let collectionName in defaultState) {
             let collection = db.collection(collectionName);

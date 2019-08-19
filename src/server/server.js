@@ -5,8 +5,10 @@ import { connectDB } from './connect-db'; //DB connector
 
 import './initialize-db'; //Brings in the whole file without importing any methods or constants from it
 import { authenticationRoute } from './authenticate';
+import path from 'path';
 
-let port = 7777;
+//On production server "process.env.PORT" is defined, if it's not use the the local dev port 7777
+let port = process.env.PORT || 7777;
 let app = express();
 
 app.listen(port, console.log("Server listening on port", port));
@@ -25,6 +27,17 @@ app.use(
 );
 
 authenticationRoute(app);
+
+//Use dist as the production build directory
+//Redirect all express server requests to the index.html page of the SPA
+if (process.env.NODE_ENV === 'production') {
+    //Sets the base directory for the application to "dist"
+    app.use(express.static(path.resolve(__dirname, '../../dist')));
+    //This allows the app to not use webpack-dev-server in production
+    app.get('/*', (req,res) => {
+        res.sendFile(path.resolve('index.html'));
+    })
+}
 
 /***** MongoDB Update Methods *****/
 
