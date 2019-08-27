@@ -1,60 +1,75 @@
 const path = require("path");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = {
-    mode: "development",
-    devtool: 'inline-cheap-module-source-map',
-    entry: path.resolve(__dirname, 'src', 'app'),
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
-        publicPath: '/'
-    },
-    resolve: {
-        extensions: ['.js', '.jsx']
-    },
-    devServer: {
-        historyApiFallback: true
-    },
-    module: {
-        rules: [{
-            test: /\.(js|jsx)$/,
-            loader: 'babel-loader'
+module.exports = (env, argv) => {
+
+    const isDevelopment = argv.mode !== 'production';
+
+    const pluginDefaults = [
+        new MiniCssExtractPlugin({
+            filename: "../style/[name].css"
+        })
+    ];
+
+    console.log("Environment mode", argv.mode);
+    console.log("isDevelopment", isDevelopment);
+
+    return {
+        mode: isDevelopment ? 'development' : 'production',
+        devtool: 'inline-cheap-module-source-map',
+        entry: path.resolve(__dirname, 'src', 'app'),
+        output: {
+            path: path.resolve(__dirname, 'dist'),
+            filename: isDevelopment ? '[name].js' : '[name].[hash].js',
+            publicPath: '/'
         },
-        {
-            test: /\.(css|scss)$/,
-            use: [
-                {
-                    //Loads the CSS into a style tag in the DOM 
-                    //TODO: Implement the "mini-css-extract-plugin" in order to extract the CSS into an external file in production
-                    loader: 'style-loader'
-                },
-                {
-                    // Interprets `@import` and `url()` like `import/require()` and will resolve them
-                    loader: 'css-loader',
-                    options: {
-                        sourceMap: true
+        resolve: {
+            extensions: ['.js', '.jsx']
+        },
+        devServer: {
+            historyApiFallback: true
+        },
+        module: {
+            rules: [{
+                test: /\.(js|jsx)$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.(css|sass|scss)$/,
+                use: [
+                    //style-loader loads the CSS into a style tag in the DOM 
+                    //fallback to style-loader in development
+                    isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+                    {
+                        // Interprets `@import` and `url()` like `import/require()` and will resolve them
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        // Loader for webpack to process CSS with PostCSS
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: function () {
+                                return [
+                                    require('autoprefixer')
+                                ];
+                            },
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        // Loads a SASS/SCSS file and compiles it to CSS
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
                     }
-                },
-                {
-                    // Loader for webpack to process CSS with PostCSS
-                    loader: 'postcss-loader',
-                    options: {
-                        plugins: function () {
-                            return [
-                                require('autoprefixer')
-                            ];
-                        },
-                        sourceMap: true
-                    }
-                },
-                {
-                    // Loads a SASS/SCSS file and compiles it to CSS
-                    loader: 'sass-loader',
-                    options: {
-                        sourceMap: true
-                    }
-                }
-            ]
-        }]
+                ]
+            }]
+        },
+        plugins: [...pluginDefaults]
     }
 }
