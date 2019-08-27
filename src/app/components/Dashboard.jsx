@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { ConnectedTaskList } from './TaskList';
 
-import styles from '../scss/Dashboard.module';
+import styles from './Dashboard.module';
 
 export const Dashboard = ({ groups }) => (
     <div>
