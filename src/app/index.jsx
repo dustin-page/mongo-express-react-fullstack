@@ -6,7 +6,7 @@ import './scss/global.scss';
 
 import { store } from './store';
 
-import { Main } from './components/Main';
+import Main from './components/Main';
 
 //console.log(store.getState());
 

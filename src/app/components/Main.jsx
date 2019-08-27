@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router-dom';
 import { Redirect } from 'react-router';
+import { hot } from 'react-hot-loader/root'
 
 import { store } from '../store';
 import { history } from '../store/history'
@@ -22,7 +23,7 @@ const RouteGuard = Component => ({ match }) => {
 
 }
 
-export const Main = () => (
+const Main = () => (
     <Router history={history}>
         <Provider store={store}>
             <div>
@@ -47,3 +48,5 @@ export const Main = () => (
         </Provider>
     </Router>
 )
+
+export default hot(Main);

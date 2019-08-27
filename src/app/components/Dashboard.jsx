@@ -8,7 +8,7 @@ import styles from './Dashboard.module';
 export const Dashboard = ({ groups }) => (
     <div>
         <h2>Dashboard</h2>
-        <h3 className={styles.purpleColor}>Test</h3>
+        <h3 className={styles.purpleColor}>Development Tasks</h3>
         {groups.map(group => (
             <ConnectedTaskList key={group.id} name={group.name} id={group.id} />
         ))}
