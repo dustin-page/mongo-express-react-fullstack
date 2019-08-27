@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap';
 
-import './scss/app.scss';
+import './scss/global.scss';
 
 import { store } from './store';
 
