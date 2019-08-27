@@ -1,7 +1,7 @@
 const path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebPackPlugin  = require('html-webpack-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
 
@@ -33,7 +33,7 @@ module.exports = (env, argv) => {
             publicPath: '/'
         },
         resolve: {
-            extensions: ['.js', '.jsx', '.scss']
+            extensions: ['.js', '.jsx', '.scss', '.gif', '.png', '.jpg', '.jpeg', '.svg']
         },
         devServer: {
             historyApiFallback: true
@@ -69,7 +69,7 @@ module.exports = (env, argv) => {
                             },
                             localsConvention: 'camelCase',
                             sourceMap: isDevelopment
-                          }
+                        }
                     },
                     {
                         // Loader for webpack to process CSS with PostCSS
@@ -127,7 +127,43 @@ module.exports = (env, argv) => {
                         }
                     }
                 ]
-            }]
+            },
+            {
+                test: /\.(gif|png|jpe?g|svg)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            limit: 0,
+                            name: '[name].[hash].[ext]',
+                            outputPath: 'images'
+                        }
+                    },
+                    {
+                        loader: 'image-webpack-loader',
+                        options: {
+                            mozjpeg: {
+                                progressive: true,
+                                quality: 65
+                            },
+                            optipng: {
+                                enabled: !isDevelopment
+                            },
+                            pngquant: {
+                                quality: '65-90',
+                                speed: 4
+                            },
+                            gifsicle: {
+                                interlaced: false
+                            },
+                            webp: {
+                                quality: 75
+                            }
+                        }
+                    }
+                ]
+            }
+            ]
         },
         plugins: [...pluginDefaults]
     }
